@@ -1,0 +1,19 @@
+# Sample yaml config file
+ddos-monitor:
+    investigation:
+        - description: "Tail Log File"
+          command: "tail -f /home/dev/logs/net_trafifc.log"
+          arguments:
+        - desciption: "Check System Resources"
+          command: "htop"
+          arguments:
+    remediation:
+        - description: "Run Automated Resolution"
+          command: "salt '*' cmd.exec_code python 'fix_ddos.py'"
+          arguments:
+        - description: "Blacklist IP"
+          command: "blacklist.sh global @ipaddr"
+          arguments:
+        - description: "Divert Traffic with BGP"
+          command: "sudo python announce_bgp.py"
+          arguments:

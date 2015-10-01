@@ -1,0 +1,14 @@
+# Sample yaml config file
+policies:
+  - name: nagios-network
+    policy: API
+    token: 124096039
+  - name: redis-server
+    policy: redis-server running
+    hostname: redis-host
+  - name: cassandra
+    policy: cassandra running
+    hostname: dbhost
+  - name: elk-elasticsearch
+    policy: API
+    token: 356802619

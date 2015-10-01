@@ -1,21 +1,18 @@
 # Sample yaml config file
-ddos-monitor:
-    investigation:
-        - description: "Tail Log File"
-          command: "tail -f /home/dev/logs/net_trafifc.log"
-          host: 
-          arguments:
-        - desciption: "Check System Resources"
-          command: "htop"
-          host: 48.36.23.51
-          arguments: "-d 5 -u root"
-    remediation:
-        - description: "Run Automated Resolution"
-          command: "salt '*' cmd.exec_code python 'fix_ddos.py'"
-          arguments:
-        - description: "Blacklist IP"
-          command: "blacklist.sh global @ipaddr"
-          arguments:
-        - description: "Divert Traffic with BGP"
-          command: "sudo python announce_bgp.py"
-          arguments:
+nagios-network:
+  error: dos-attack-detected
+  investigation:
+    - description: "Tail Log File"
+      command: "tail -f /home/dev/logs/net_trafifc.log"
+    - desciption: "Check System Resources"
+      command: "run_htop.sh {{ blub.hostname }} {{ blub.args }}"
+	    defaults:
+        hostname: 48.36.23.51
+        args: "-d 5 -u root"
+  remediation:
+    - description: "Run Automated Resolution"
+      command: "salt '*' cmd.exec_code python 'fix_ddos.py'"
+    - description: "Blacklist IP"
+      command: "blacklist.sh global {{ blub.ipaddr }}"
+    - description: "Divert Traffic with BGP"
+      command: "sudo python announce_bgp.py"
